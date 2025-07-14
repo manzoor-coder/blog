@@ -240,8 +240,6 @@ const NewPost = () => {
               }}
               onImageSelect={handleEditorImages}
             />
-
-            
             {/* <QuillEditorComponent
               value={content}
               onChange={setContent}
