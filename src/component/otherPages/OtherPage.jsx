@@ -135,7 +135,6 @@ const OtherPage = () => {
 
     return (
         <>
-            <Navbar />
             <Container className="max-w-4xl mx-auto px-4 py-8">
                 {postData ? (
                     <div>
@@ -256,7 +255,6 @@ const OtherPage = () => {
                     <p>Loading post...</p>
                 )}
             </Container>
-            <Footer />
         </>
     );
 };

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
     collection,
     getDocs,
-    deleteDoc,
-    doc,
     query,
     orderBy
 } from 'firebase/firestore';
@@ -50,18 +48,18 @@ const Posts = () => {
         }
     };
 
-    const handleDelete = async (postId) => {
-        try {
-            await deleteDoc(doc(db, 'posts', postId));
-            const updated = posts.filter(post => post.id !== postId);
-            setPosts(updated);
-            setFilteredPosts(updated);
-            toast.success('Post deleted successfully!');
-        } catch (error) {
-            console.error('Error deleting post:', error);
-            toast.error('Failed to delete post.');
-        }
-    };
+    // const handleDelete = async (postId) => {
+    //     try {
+    //         await deleteDoc(doc(db, 'posts', postId));
+    //         const updated = posts.filter(post => post.id !== postId);
+    //         setPosts(updated);
+    //         setFilteredPosts(updated);
+    //         toast.success('Post deleted successfully!');
+    //     } catch (error) {
+    //         console.error('Error deleting post:', error);
+    //         toast.error('Failed to delete post.');
+    //     }
+    // };
 
     const filterPosts = () => {
         let result = [...posts];

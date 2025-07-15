@@ -9,6 +9,16 @@ import { db } from '../../Authentication/firebase_config';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import CustomHTMLRenderer from './CustomHTMLRenderer';
 import { toast } from 'react-toastify';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../../components/ui/pagination"
+
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -16,6 +26,9 @@ const MainPage = () => {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
+
 
   // Initialize AOS
   useEffect(() => {
@@ -69,6 +82,12 @@ const MainPage = () => {
     return div.textContent || div.innerText || '';
   }
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+
+
   return (
     <>
       <div className="w-full h-[500px] bg-gray-100 main_img flex justify-center items-center">
@@ -91,10 +110,10 @@ const MainPage = () => {
 
           {loading ? (
             <p className="text-center text-gray-500">Loading posts...</p>
-          ) : filteredPosts.length === 0 ? (
+          ) : currentPosts.length === 0 ? (
             <p className="text-center text-gray-500">No posts found.</p>
           ) : (
-            filteredPosts.map((post) => (
+            currentPosts.map((post) => (
               <div
                 key={post.id}
                 className="flex flex-col items-start md:flex-row md:items-center justify-between my-8"
@@ -156,7 +175,65 @@ const MainPage = () => {
               </div>
             ))
           )}
+
+          {totalPages > 1 && (
+            <Pagination>
+              <PaginationContent>
+                {/* Previous Button */}
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (currentPage > 1) setCurrentPage(currentPage - 1);
+                    }}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+
+                {/* Page Numbers */}
+                {Array.from({ length: totalPages }, (_, index) => {
+                  const isActive = currentPage === index + 1;
+                  return (
+                    <PaginationItem
+                      key={index + 1}
+                      
+                    >
+                      <PaginationLink
+                      className={isActive ? "bg-green-600 rounded text-white" : "bg-gray-200"}
+                        href="#"
+                        isActive={isActive}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentPage(index + 1);
+                        }}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+
+
+                {/* Next Button */}
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                    }}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          )}
+
         </Container>
+
+
+
       </div>
     </>
   );
