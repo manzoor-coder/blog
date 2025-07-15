@@ -117,8 +117,8 @@ const AdminDashboard = () => {
                   <p className="text-sm text-gray-500">{adminData.email}</p>
                 </div>
                 <DropdownMenuSeparator />
-                <Link to='/admin/profile'><DropdownMenuItem>Profile</DropdownMenuItem></Link>
-                <DropdownMenuItem onClick={() => { handleLogout(navigate) }}>Logout</DropdownMenuItem>
+                <Link to='/admin/profile' ><DropdownMenuItem style={{cursor: 'pointer'}}>Profile</DropdownMenuItem></Link>
+                <DropdownMenuItem onClick={() => { handleLogout(navigate) }} style={{cursor: 'pointer'}}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <p className="text-gray-700 font-semibold text-lg">{adminData.name}</p>

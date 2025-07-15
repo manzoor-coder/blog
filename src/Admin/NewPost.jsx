@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import JoditEditorComponent from './JoditEditorComponent';
 import { db } from '../Authentication/firebase_config';
@@ -11,7 +11,7 @@ const NewPost = () => {
   const [content, setContent] = useState('');
   const [editorImages, setEditorImages] = useState([]);
   const navigate = useNavigate();
-  const editorRef = useRef(null);
+  // const editorRef = useRef(null);
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -240,6 +240,8 @@ const NewPost = () => {
               }}
               onImageSelect={handleEditorImages}
             />
+
+            
             {/* <QuillEditorComponent
               value={content}
               onChange={setContent}

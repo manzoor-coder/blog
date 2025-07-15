@@ -43,17 +43,7 @@ const Posts = () => {
             setPosts(data);
             setFilteredPosts(data);
 
-            // Alternative without index:
-            /*
-            const q = query(postRef, orderBy('createdAt', 'desc'));
-            const snapshot = await getDocs(q);
-            const data = snapshot.docs
-                .map(doc => ({ id: doc.id, ...doc.data() }))
-                .filter(post => post.featuredImage); // Client-side filter
-            console.log("Fetched all posts with images:", data);
-            setPosts(data);
-            setFilteredPosts(data);
-            */
+           
         } catch (error) {
             console.error('Error fetching posts:', error);
             toast.error('Failed to fetch posts. Please ensure the Firestore index is created if filtering by featuredImage.');
